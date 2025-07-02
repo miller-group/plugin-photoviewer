@@ -1,4 +1,4 @@
-package com.sarriaroman.PhotoViewer;
+package mh.plugins.photo_viewer;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -58,7 +58,8 @@ public class PhotoActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(getApplication().getResources().getIdentifier("activity_photo", "layout", getApplication().getPackageName()));
+        setContentView(getApplication().getResources().getIdentifier("activity_photo", "layout",
+                getApplication().getPackageName()));
 
         // Load the Views
         findViews();
@@ -70,22 +71,21 @@ public class PhotoActivity extends Activity {
             this.mHeaders = parseHeaders(mArgs.optString(5));
             this.pOptions = mArgs.optJSONObject(6);
 
-            if( pOptions == null ) {
+            if (pOptions == null) {
                 pOptions = new JSONObject();
                 pOptions.put("fit", true);
                 pOptions.put("centerInside", true);
                 pOptions.put("centerCrop", false);
             }
 
-            //Set the share button visibility
+            // Set the share button visibility
             shareBtnVisibility = this.mShare ? View.VISIBLE : View.INVISIBLE;
-
 
         } catch (JSONException exception) {
             shareBtnVisibility = View.INVISIBLE;
         }
         shareBtn.setVisibility(shareBtnVisibility);
-        //Change the activity title
+        // Change the activity title
         if (!mTitle.equals("")) {
             titleTxt.setText(mTitle);
         }
@@ -141,17 +141,22 @@ public class PhotoActivity extends Activity {
      */
     private void findViews() {
         // Buttons first
-        closeBtn = (ImageButton) findViewById(getApplication().getResources().getIdentifier("closeBtn", "id", getApplication().getPackageName()));
-        shareBtn = (ImageButton) findViewById(getApplication().getResources().getIdentifier("shareBtn", "id", getApplication().getPackageName()));
+        closeBtn = (ImageButton) findViewById(
+                getApplication().getResources().getIdentifier("closeBtn", "id", getApplication().getPackageName()));
+        shareBtn = (ImageButton) findViewById(
+                getApplication().getResources().getIdentifier("shareBtn", "id", getApplication().getPackageName()));
 
-        //ProgressBar
-        loadingBar = (ProgressBar) findViewById(getApplication().getResources().getIdentifier("loadingBar", "id", getApplication().getPackageName()));
+        // ProgressBar
+        loadingBar = (ProgressBar) findViewById(
+                getApplication().getResources().getIdentifier("loadingBar", "id", getApplication().getPackageName()));
         // Photo Container
-        photo = (ImageView) findViewById(getApplication().getResources().getIdentifier("photoView", "id", getApplication().getPackageName()));
+        photo = (ImageView) findViewById(
+                getApplication().getResources().getIdentifier("photoView", "id", getApplication().getPackageName()));
         mAttacher = new PhotoViewAttacher(photo);
 
         // Title TextView
-        titleTxt = (TextView) findViewById(getApplication().getResources().getIdentifier("titleTxt", "id", getApplication().getPackageName()));
+        titleTxt = (TextView) findViewById(
+                getApplication().getResources().getIdentifier("titleTxt", "id", getApplication().getPackageName()));
     }
 
     /**
@@ -175,15 +180,15 @@ public class PhotoActivity extends Activity {
     }
 
     private RequestCreator setOptions(RequestCreator picasso) throws JSONException {
-        if(this.pOptions.has("fit") && this.pOptions.optBoolean("fit")) {
+        if (this.pOptions.has("fit") && this.pOptions.optBoolean("fit")) {
             picasso.fit();
         }
 
-        if(this.pOptions.has("centerInside") && this.pOptions.optBoolean("centerInside")) {
+        if (this.pOptions.has("centerInside") && this.pOptions.optBoolean("centerInside")) {
             picasso.centerInside();
         }
 
-        if(this.pOptions.has("centerCrop") && this.pOptions.optBoolean("centerCrop")) {
+        if (this.pOptions.has("centerCrop") && this.pOptions.optBoolean("centerCrop")) {
             picasso.centerCrop();
         }
 
@@ -254,7 +259,6 @@ public class PhotoActivity extends Activity {
         }
         super.onDestroy();
     }
-
 
     public File getLocalBitmapFileFromString(String base64) {
         File file;
